@@ -10,6 +10,7 @@ import (
 	"errors"
 	"io"
 	"log"
+	"math"
 	"strings"
 	"time"
 )
@@ -157,4 +158,14 @@ func EncryptBase64(plaintext []byte, key []byte) (string, error) {
 func DecryptBase64(base64string string, key []byte) ([]byte, error) {
 	ciphertext, _ := base64.RawURLEncoding.DecodeString(base64string)
 	return Decrypt(ciphertext, key)
+}
+
+//ToFixed round float number by precision value
+func ToFixed(num float64, precision int) float64 {
+	output := math.Pow(10, float64(precision))
+	return float64(round(num*output)) / output
+}
+
+func round(num float64) int {
+	return int(num + math.Copysign(0.5, num))
 }
