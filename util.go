@@ -92,6 +92,17 @@ func ContainsString(slice []string, value string) bool {
 	return false
 }
 
+//ContainsUint64 return true when uint64 value contains in slice []uint64.
+//In other case return false.
+func ContainsUint64(slice []uint64, value uint64) bool {
+	for _, v := range slice {
+		if v == value {
+			return true
+		}
+	}
+	return false
+}
+
 //TimeTrack loggin excecution time
 func TimeTrack(start time.Time, name string) {
 	elapsed := time.Since(start)
