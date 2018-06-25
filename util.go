@@ -180,3 +180,17 @@ func ToFixed(num float64, precision int) float64 {
 func round(num float64) int {
 	return int(num + math.Copysign(0.5, num))
 }
+
+//IsToday check that unix timestamp is today date
+func IsToday(timestamp int64, loc *time.Location) bool {
+	current := time.Now()
+	date := time.Unix(timestamp, 0).In(loc)
+	return current.Year() == date.Year() &&
+		current.Month() == date.Month() &&
+		current.Day() == date.Day()
+}
+
+//IsTodayLocal check that unix timestamp is today local date
+func IsTodayLocal(timestamp int64) bool {
+	return IsToday(timestamp, time.Local)
+}
