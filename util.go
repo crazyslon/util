@@ -10,6 +10,7 @@ import (
 	"errors"
 	"io"
 	"log"
+	"math"
 	"strings"
 	"time"
 )
@@ -91,6 +92,17 @@ func ContainsString(slice []string, value string) bool {
 	return false
 }
 
+//ContainsUint64 return true when uint64 value contains in slice []uint64.
+//In other case return false.
+func ContainsUint64(slice []uint64, value uint64) bool {
+	for _, v := range slice {
+		if v == value {
+			return true
+		}
+	}
+	return false
+}
+
 //TimeTrack loggin excecution time
 func TimeTrack(start time.Time, name string) {
 	elapsed := time.Since(start)
@@ -157,4 +169,28 @@ func EncryptBase64(plaintext []byte, key []byte) (string, error) {
 func DecryptBase64(base64string string, key []byte) ([]byte, error) {
 	ciphertext, _ := base64.RawURLEncoding.DecodeString(base64string)
 	return Decrypt(ciphertext, key)
+}
+
+//ToFixed round float number by precision value
+func ToFixed(num float64, precision int) float64 {
+	output := math.Pow(10, float64(precision))
+	return float64(round(num*output)) / output
+}
+
+func round(num float64) int {
+	return int(num + math.Copysign(0.5, num))
+}
+
+//IsToday check that unix timestamp is today date
+func IsToday(timestamp int64, loc *time.Location) bool {
+	current := time.Now()
+	date := time.Unix(timestamp, 0).In(loc)
+	return current.Year() == date.Year() &&
+		current.Month() == date.Month() &&
+		current.Day() == date.Day()
+}
+
+//IsTodayLocal check that unix timestamp is today local date
+func IsTodayLocal(timestamp int64) bool {
+	return IsToday(timestamp, time.Local)
 }
