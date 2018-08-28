@@ -61,3 +61,44 @@ func TestIsValidVideoURL(t *testing.T) {
 		assert.Equal(t, result, IsValidVideoURL(sourceURL))
 	}
 }
+
+func TestIsValidImageURL(t *testing.T) {
+	//key - source url
+	//val - expexted result
+	testData := map[string]bool{
+		"":    false,
+		"   ": false,
+		"http://test.com/index.html":  false,
+		"http://test.com/index.xml":   false,
+		"http://test.com/image.png":   true,
+		"http://test./image.mp4":      false,
+		"http://test.com/image.jpeg":  true,
+		"http://te!st.com/image.mpeg": false,
+		"http://test.com/image.jpg":   true,
+		"http://test.t/image.3gpp":    false,
+		"http://test.com/image.gif":   true,
+		"ftp://test.com/image.webm":   false,
+	}
+
+	for sourceURL, result := range testData {
+		assert.Equal(t, result, IsValidImageURL(sourceURL))
+	}
+}
+
+func TestIsValidHTMLURL(t *testing.T) {
+	//key - source url
+	//val - expexted result
+	testData := map[string]bool{
+		"":    false,
+		"   ": false,
+		"http://test.com/index.html": true,
+		"http://test.com/index.xml":  false,
+		"http://test.com/image.htm":  true,
+		"http://test./image.mp4":     false,
+		"http://test.com/image.jpeg": false,
+	}
+
+	for sourceURL, result := range testData {
+		assert.Equal(t, result, IsValidHTMLURL(sourceURL))
+	}
+}
