@@ -83,6 +83,9 @@ func TestGetDomainFromURL(t *testing.T) {
 }
 
 func TestGetDomain(t *testing.T) {
+
+	assert.Equal(t, "mk.com", GetDomain("mk.com"))
+	assert.Equal(t, "m.com", GetDomain("m.com"))
 	assert.Equal(t, "google.com", GetDomain("google.com"))
 	assert.Equal(t, "test-domain.ru", GetDomain("test-domain.ru"))
 	assert.Equal(t, "test.domain.org", GetDomain("test.domain.org"))

@@ -9,7 +9,7 @@ import (
 	"golang.org/x/net/idna"
 )
 
-var domainRegexp = regexp.MustCompile("^[0-9\\p{L}][0-9\\p{L}-\\.]{1,61}[0-9\\p{L}]\\.[0-9\\p{L}][\\p{L}-]*[0-9\\p{L}]+$")
+var domainRegexp = regexp.MustCompile("^[0-9\\p{L}-\\.]{0,61}[0-9\\p{L}]\\.[0-9\\p{L}][\\p{L}-]*[0-9\\p{L}]+$")
 
 //GetDomainFromURL return domain from url if it valid,
 //in other case return empty string
@@ -30,6 +30,10 @@ func GetDomainFromURL(rawurl string) string {
 //GetDomain return domain if it valid and return empty string in other case.
 func GetDomain(domain string) string {
 	if strings.Contains(domain, "_") {
+		return ""
+	}
+
+	if strings.HasPrefix(domain, "-") {
 		return ""
 	}
 
