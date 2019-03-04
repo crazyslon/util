@@ -55,7 +55,7 @@ func (c *APIClient) WithSuccessStatus(
 //newHTTPClient creates new http client with timeout
 func newHTTPClient(timeoutMs int) *http.Client {
 	transport := &http.Transport{
-		MaxIdleConnsPerHost: 1024,
+		MaxIdleConnsPerHost: 3584,
 	}
 	return &http.Client{
 		Transport: transport,
